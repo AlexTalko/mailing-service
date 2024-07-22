@@ -1,0 +1,22 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+
+<div class="container">
+    <form class="row" method="post" enctype="multipart/form-data">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Зарегистрироваться
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="col-12 mb-5">
+        <a class="btn btn-outline-secondary" href="{% url 'catalog:category_list' %}" role="button">Назад</a>
+    </div>
+</div>
+{% endblock %}
