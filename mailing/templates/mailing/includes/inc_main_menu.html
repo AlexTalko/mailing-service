@@ -1,3 +1,5 @@
+{% load my_tags %}
+
 <header data-bs-theme="dark">
     <div class="collapse text-bg-dark" id="navbarHeader">
         <div class="container">
@@ -8,16 +10,19 @@
 
 
                     <ul class="col-sm-4 offset-md-1 py-4 navbar-nav float-end">
-                        <li class="nav-item"><a href="{% url 'catalog:category_list' %}" class="text-white">Главная</a></li>
+                        <li class="nav-item"><a href="{% url 'mailing:setting_list' %}" class="text-white">Главная</a>
+                        </li>
 
                         {% if user.is_authenticated %}
                         <li class="nav-item"><a href="{% url 'users:logout' %}" class="text-white">Выход</a></li>
+                        <li class="nav-item"><a href="{% url 'users:profile' %}" class="text-white">Профиль</a></li>
                         {% else %}
                         <li class="nav-item"><a href="{% url 'users:login' %}" class="text-white">Вход</a></li>
-                        <li class="nav-item"><a href="{% url 'users:register' %}" class="text-white">Зарегистрироваться</a></li>
+                        <li class="nav-item"><a href="{% url 'users:register' %}"
+                                                class="text-white">Зарегистрироваться</a></li>
                         {% endif %}
                         <li class="nav-item"><a href="{% url 'blog:list' %}" class="text-white">Статьи</a></li>
-                        <li class="nav-item"><a href="{% url 'catalog:contacts' %}" class="text-white">Контакты</a></li>
+                        <li class="nav-item"><a href="{% url 'mailing:contacts' %}" class="text-white">Контакты</a></li>
 
                     </ul>
                 </div>
@@ -26,11 +31,14 @@
     </div>
     <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-                <strong>Почтовый сервис</strong>
+            <a href="{% url 'mailing:setting_list' %}" class="navbar-brand d-flex align-items-center">
+                <h3>
+                    <strong>ПочтаПечкин</strong>
+                </h3>
                 {% if user.is_authenticated %}
                 <div class="col">
-                    <div class="p-3">Здравствуйте, {{ user.email }}!</div>
+                    <div class="p-3">приветствует Тебя, {{ user.email }}!
+                    </div>
                 </div>
                 {% endif %}
             </a>

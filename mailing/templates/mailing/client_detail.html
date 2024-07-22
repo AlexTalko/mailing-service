@@ -1,0 +1,32 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+<div class="row mb-2">
+    <div class="col-md-12">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                {% if object %}
+                <strong class="d-inline-block mb-4 text-primary-emphasis">Клиент:</strong>
+                <h3 class="mb-1">{{ object.email }}</h3>
+                {% if object.last_name %}
+                <div class="mb-1 text-body-secondary">{{ object.first_name }} {{ object.last_name }}</div>
+                {% elif not object.last_name %}
+                <div class="mb-1 text-body-secondary">{{ object.first_name }}</div>
+                {% endif %}
+                <p class="card-text mb-auto">{{ object.comment }}</p>
+                <div class="col mb-2">
+                <a class="btn btn-outline-info rounded-pill" href="{% url 'mailing:client_list' %}">
+                    Назад
+                </a>
+                <a class="btn btn-outline-info rounded-pill" href="{% url 'mailing:client_update' object.pk %}">
+                    Редактировать
+                </a>
+                <a class="btn btn-outline-warning rounded-pill" href="{% url 'mailing:client_delete' object.pk %}">
+                    Удалить
+                </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

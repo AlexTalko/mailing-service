@@ -1,0 +1,27 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+<div class="row mb-2">
+    <div class="col-md-12">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                {% if object %}
+                <strong class="d-inline-block mb-32 text-primary-emphasis">Тема письма:</strong>
+                <h3 class="mb-2">{{ object.subject }}</h3>
+                <p class="card-text mb-4">{{ object.message }}</p>
+                <div class="col mb-2">
+                <a class="btn btn-outline-info rounded-pill" href="{% url 'mailing:message_list' %}">
+                    Назад
+                </a>
+                <a class="btn btn-outline-info rounded-pill" href="{% url 'mailing:message_update' object.pk %}">
+                    Редактировать
+                </a>
+                <a class="btn btn-outline-warning rounded-pill" href="{% url 'mailing:message_delete' object.pk %}">
+                    Удалить
+                </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

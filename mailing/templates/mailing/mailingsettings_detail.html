@@ -1,0 +1,40 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+<div class="col-12 mb-5">
+    <a class="btn btn-outline-primary" href="{% url 'mailing:setting_create' %}">Добавить рассылку</a>
+    <a class="btn btn-outline-primary" href="{% url 'mailing:setting_create' %}">Добавить клиента</a>
+    <a class="btn btn-outline-primary" href="{% url 'mailing:setting_create' %}">Создать, письмо для рассылки</a>
+</div>
+<div class="row mb-2">
+    <div class="col-md-12">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                {% if object %}
+                <p class="mb-2">Время начала рассылки: {{ object.start_time }}</p>
+                <p class="mb-2">Время окончания рассылки: {{ object.end_time }}</p>
+                <p class="mb-2">Период рассылки: {{ object.get_period_display }}</p>
+                <p class="mb-2">Статус рассылки: {{ object.get_status_display }}</p>
+                <p class="mb-2">Сообщение: {{ object.message }} </p>
+                <p class="mb-2">Список клиентов: {{ client }}</p>
+
+                {% for client in object.clients.all %}
+                <p class="mb-2">{{ client }}</p>
+                {% endfor %}
+
+                <div class="col mb-2">
+                    <a class="btn btn-outline-info rounded-pill" href="{% url 'mailing:setting_list' %}">
+                        Назад
+                    </a>
+                    <a class="btn btn-outline-info rounded-pill" href="{% url 'mailing:setting_update' object.pk %}">
+                        Редактировать
+                    </a>
+                    <a class="btn btn-outline-warning rounded-pill" href="{% url 'mailing:setting_delete' object.pk %}">
+                        Удалить
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

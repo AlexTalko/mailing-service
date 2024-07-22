@@ -1,5 +1,5 @@
-{% extends 'catalog/base.html' %}
-
+{% extends 'mailing/base.html' %}
+{% load my_tags %}
 {% block content %}
 <section class="py-5 text-center container">
     <div class="row py-lg-5">
@@ -27,6 +27,8 @@
                         <p class="card-text">Статья:
                             {{ object }}
                         </p>
+                        <img src="{{ object.image | media_filter }}">
+
                         <p class="card-text">Содержание:
                             {{ object.body|truncatechars:100 }}
                         </p>

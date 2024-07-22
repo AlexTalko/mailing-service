@@ -1,0 +1,31 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+<div class="col-12 mb-5">
+    <a class="btn btn-outline-primary" href="{% url 'mailing:message_create' %}">Добавить сообщение</a>
+    <a class="btn btn-outline-primary" href="{% url 'mailing:setting_create' %}">Добавить рассылку</a>
+
+
+</div>
+<div class="row mb-2">
+    {% for message in object_list %}
+    <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary-emphasis">Тема письма:</strong>
+                <h4 class="mb-2">{{ message.subject }}</h4>
+                <p class="card-text mb-4">{{ message.message|truncatechars:100 }}</p>
+                <a href="{% url 'mailing:message_detail' message.pk %}"
+                   class="icon-link gap-1 icon-link-hover stretched-link">
+                    Подробнее
+                    <svg class="bi">
+                        <use xlink:href="#chevron-right"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<a class="btn btn-outline-secondary rounded-pill" href="{% url 'mailing:start_page' %}">На главную страницу</a>
+
+{% endblock %}
