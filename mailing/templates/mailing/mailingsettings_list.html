@@ -15,7 +15,7 @@
                 <p class="mb-2">Период рассылки: {{ setting.get_period_display }}</p>
                 <p class="mb-2">Статус рассылки: {{ setting.get_status_display }}</p>
                 <p class="mb-2">Сообщение: {{ setting.message }} </p>
-                {% for client in setting.clients.all %}
+                {% for client in setting.clients.all|slice:':3' %}
                 <p class="mb-2">{{ client }}</p>
                 {% endfor %} <a href="{% url 'mailing:setting_detail' setting.pk %}"
                                 class="icon-link gap-1 icon-link-hover stretched-link">
