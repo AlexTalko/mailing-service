@@ -1,9 +1,9 @@
 from django.core.management import BaseCommand
 
-from mailing.services import send_mails
+from mailing.services.serv_send_mail import send_all_mails
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        send_mails()
+        send_all_mails()

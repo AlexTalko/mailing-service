@@ -1,64 +1,38 @@
-import datetime
-import smtplib
-
+from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.triggers.cron import CronTrigger
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.management import BaseCommand
+from django_apscheduler import util
+from django_apscheduler.jobstores import DjangoJobStore
+from django_apscheduler.models import DjangoJobExecution
 
-from mailing.models import MailingSettings, MailingLog
+from mailing.services.serv_send_mail import send_all_mails
 
 
-def _send_email(message_settings, message_client):
-    try:
-        send_mail(
-            subject=message_settings.message.subject,
-            message=message_settings.message.message,
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[message_client.email],
-            fail_silently=False,
+@util.close_old_connections
+def delete_old_job_executions(max_age=604_800):
+    DjangoJobExecution.objects.delete_old_job_executions(max_age)
+
+
+class Command(BaseCommand):
+    help = 'Runs APScheduler.'
+
+    def handle(self, *args, **options):
+        scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)
+        scheduler.add_jobstore(DjangoJobStore(), "default")
+
+        scheduler.add_job(
+            send_all_mails,
+            trigger=CronTrigger(second='*/30'),
+            id='sendmail',
+            max_instances=10,
+            replace_existing=True,
         )
-        MailingLog.objects.create(
-            status=MailingLog.STATUS_OK,
-            settings=message_settings,
-            client=message_client.pk
-        )
 
-    except smtplib.SMTPException as e:
-        MailingLog.objects.create(
-            status=MailingLog.STATUS_FAILED,
-            settings=message_settings,
-            client=message_client.pk,
-            server_response=str(e),
-        )
-
-
-def send_mails():
-    datetime_now = datetime.datetime.now(datetime.timezone.utc)
-    for mailing_settings in MailingSettings.objects.filter(status=MailingSettings.STATUS_STARTED):
-
-        if (datetime_now > mailing_settings.start_time) and (datetime_now < mailing_settings.end_time):
-
-            for mailing_client in mailing_settings.clients.all():
-
-                mailing_log = MailingLog.objects.filter(
-                    client=mailing_client.pk,
-                    settings=mailing_settings
-                )
-
-                if mailing_log.exists():
-                    last_try_date = mailing_log.order_by('-last_try').first().last_try
-
-                    if mailing_settings.period == MailingSettings.PERIOD_DAILY:
-                        if (datetime_now - last_try_date).days >= 1:
-                            _send_email(mailing_settings, mailing_client)
-
-                    elif mailing_settings.period == MailingSettings.PERIOD_WEEKLY:
-                        if (datetime_now - last_try_date).days >= 7:
-                            _send_email(mailing_settings, mailing_client)
-
-                    elif mailing_settings.period == MailingSettings.PERIOD_MONTHLY:
-                        if (datetime_now - last_try_date).days >= 30:
-                            _send_email(mailing_settings, mailing_client)
-                else:
-                    _send_email(mailing_settings, mailing_client)
-
-
+        try:
+            print('Starting scheduler...')
+            scheduler.start()
+        except KeyboardInterrupt:
+            print("Stopped scheduler")
+            scheduler.shutdown()
+            print("Success!")
