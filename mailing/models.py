@@ -46,10 +46,12 @@ class MailingSettings(models.Model):
         (STATUS_DONE, 'Завершена'),
     )
 
-    start_time = models.DateTimeField(verbose_name='Время запуска')
-    end_time = models.DateTimeField(verbose_name='Время окончания', **NULLABLE)
+    start_time = models.DateTimeField(verbose_name='Время запуска', help_text='ДД.ММ.ГГГГ 00:00')
+    end_time = models.DateTimeField(verbose_name='Время окончания', help_text='ДД.ММ.ГГГГ 00:00', **NULLABLE)
+
     period = models.CharField(choices=PERIODS, default=PERIOD_DAILY, max_length=20, verbose_name='Период')
     status = models.CharField(choices=STATUSES, default=STATUS_CREATED, max_length=20, verbose_name='Статус')
+    
     message = models.ForeignKey('MailingMessage', on_delete=models.CASCADE, verbose_name='сообщение', **NULLABLE)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     clients = models.ManyToManyField(Client, related_name='mailing_settings')

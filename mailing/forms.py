@@ -16,7 +16,7 @@ class StyleFormMixin:
 class ClientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Client
-        exclude = ('owner',)
+        exclude = ('owner', 'is_banned',)
 
 
 class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
@@ -29,3 +29,21 @@ class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = MailingSettings
         exclude = ('owner',)
+
+
+class MailingSettingsManagerForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = MailingSettings
+        fields = ('message', 'clients',)
+
+
+class ClientManagerForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = '__all__'
+
+
+class MessageManagerForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = MailingMessage
+        fields = '__all__'

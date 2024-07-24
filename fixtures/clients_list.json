@@ -1,0 +1,50 @@
+[
+{
+  "model": "mailing.client",
+  "pk": 1,
+  "fields": {
+    "email": "talko.alexander@gmail.com",
+    "first_name": "Александр",
+    "last_name": "Талько",
+    "comment": "test",
+    "owner": 1,
+    "is_banned": false
+  }
+},
+{
+  "model": "mailing.client",
+  "pk": 2,
+  "fields": {
+    "email": "test@sky.com",
+    "first_name": "Test",
+    "last_name": "Vestov",
+    "comment": "sdfsdfg",
+    "owner": 2,
+    "is_banned": false
+  }
+},
+{
+  "model": "mailing.client",
+  "pk": 3,
+  "fields": {
+    "email": "vest@sky.com",
+    "first_name": "Vest",
+    "last_name": "Testov",
+    "comment": "1241256",
+    "owner": 2,
+    "is_banned": false
+  }
+},
+{
+  "model": "mailing.client",
+  "pk": 4,
+  "fields": {
+    "email": "pest@sky.lol",
+    "first_name": "Pest",
+    "last_name": "Lestov",
+    "comment": "xcbsdfbsdfb",
+    "owner": 2,
+    "is_banned": false
+  }
+}
+]

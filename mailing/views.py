@@ -6,6 +6,7 @@ from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 
+from blog.models import Blog
 from mailing.models import MailingSettings, Client, MailingMessage, MailingLog
 from mailing.forms import MailingSettingsForm, ClientForm
 
@@ -33,15 +34,11 @@ class MailingListView(LoginRequiredMixin, ListView):
     model = MailingSettings
 
     def get_queryset(self):
-        return MailingSettings.objects.filter(owner=self.request.user)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Список рассылок'
-        context['mailings_all'] = len(MailingSettings.objects.all())
-        context['mailings_active'] = len(MailingSettings.objects.filter(status='started'))
-        context['clients_unique'] = len(Client.objects.all().distinct())
-        return context
+        if self.request.user.is_superuser:
+            return MailingSettings.objects.all()
+        elif self.request.user.is_authenticated:
+            return MailingSettings.objects.filter(owner=self.request.user)
+        raise PermissionDenied
 
 
 class MailingSettingsCreateView(LoginRequiredMixin, CreateView):
@@ -182,7 +179,16 @@ class ClientDeleteView(LoginRequiredMixin, DeleteView):
 
 class MailingLogListView(LoginRequiredMixin, ListView):
     model = MailingLog
-    fields = '__all__'
+    template_name = 'mailing/start_page.html'
+    reverse_url = reverse_lazy('mailing:start_page')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Список рассылок'
+        context['mailings_all'] = len(MailingSettings.objects.all())
+        context['mailings_active'] = len(MailingSettings.objects.filter(status='started'))
+        context['clients_unique'] = len(Client.objects.all().distinct())
+        context['blog'] = Blog.objects.all()[:3]
+        return context
     # def get_queryset(self):
     #     return MailingLog.objects.filter(owner=self.request.user)

@@ -1,0 +1,158 @@
+[
+{
+  "model": "users.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$PE1by1CV4uQVRZ59DrgWsU$TtGihtpUuQF9lY21u44kzQC9fPXgZfckP1p2+MNB+9g=",
+    "last_login": "2024-07-24T19:44:13.178Z",
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2024-07-22T11:00:50Z",
+    "email": "admin@example.com",
+    "phone": null,
+    "country": null,
+    "avatar": "",
+    "token": null,
+    "groups": [],
+    "user_permissions": [
+      1,
+      2,
+      3,
+      4,
+      9,
+      10,
+      11,
+      12,
+      5,
+      6,
+      7,
+      8,
+      41,
+      42,
+      43,
+      44,
+      13,
+      14,
+      15,
+      16,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      17,
+      18,
+      19,
+      20,
+      37,
+      38,
+      39,
+      40
+    ]
+  }
+},
+{
+  "model": "users.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$DanyNU9XFdvl4O5An71RhD$r9dVsiWELYI/xPvIoJ0yQ+6f254Vyh79+x4on8PcpjU=",
+    "last_login": "2024-07-22T21:56:14.954Z",
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-07-22T11:32:32.375Z",
+    "email": "guramamoryan@rambler.ru",
+    "phone": null,
+    "country": null,
+    "avatar": "users/avatars/грабли.jpeg",
+    "token": "81b10f9e89bafeba79fc9d4958fcb38e",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 4,
+  "fields": {
+    "password": "123456",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Pest",
+    "last_name": "Vestov",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-07-24T20:08:04Z",
+    "email": "pest@sky.com",
+    "phone": null,
+    "country": null,
+    "avatar": "",
+    "token": null,
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 5,
+  "fields": {
+    "password": "123456",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Vest",
+    "last_name": "Pestov",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-07-24T20:09:16Z",
+    "email": "vest@sky.com",
+    "phone": null,
+    "country": null,
+    "avatar": "",
+    "token": null,
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.user",
+  "pk": 6,
+  "fields": {
+    "password": "123456",
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-07-24T20:09:44Z",
+    "email": "test@sky.com",
+    "phone": null,
+    "country": null,
+    "avatar": "",
+    "token": null,
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+}
+]
